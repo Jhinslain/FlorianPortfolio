@@ -1,102 +1,61 @@
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Environment } from '@react-three/drei'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import HeroModel from './HeroModel'
+import Star from './Star'
 
 function Hero() {
+  const containerRef = useRef(null)
+  const textRef = useRef(null)
+  const [fontSize, setFontSize] = useState(100)
+
+  useEffect(() => {
+    const adjustFontSize = () => {
+      if (containerRef.current && textRef.current) {
+        const containerWidth = containerRef.current.offsetWidth
+        const text = 'PORTFOLIO'
+        
+        // Mesurer la largeur du texte avec une taille de test
+        const testElement = document.createElement('span')
+        testElement.style.visibility = 'hidden'
+        testElement.style.position = 'absolute'
+        testElement.style.fontFamily = 'Russo One, sans-serif'
+        testElement.style.fontSize = '100px'
+        testElement.style.textTransform = 'uppercase'
+        testElement.style.letterSpacing = '0.05em'
+        testElement.style.whiteSpace = 'nowrap'
+        testElement.textContent = text
+        document.body.appendChild(testElement)
+        
+        const textWidth = testElement.offsetWidth
+        document.body.removeChild(testElement)
+        
+        // Calculer la taille de police pour que le texte occupe toute la largeur
+        const calculatedSize = (containerWidth / textWidth) * 100
+        setFontSize(calculatedSize)
+      }
+    }
+
+    adjustFontSize()
+    window.addEventListener('resize', adjustFontSize)
+    
+    return () => {
+      window.removeEventListener('resize', adjustFontSize)
+    }
+  }, [])
+
   return (
-    <section className="relative w-full h-screen overflow-hidden p-12">
-      {/* Background gradient - violet foncé à indigo */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-800">
-        {/* Subtle vertical lines effect on left */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 opacity-10">
-          <div className="h-full bg-gradient-to-r from-transparent via-white to-transparent"></div>
-        </div>
-      </div>
+    <section className="relative w-full h-screen overflow-hidden">
+      {/* Background gradient - violet foncé à indigo en bas à gauche */}
+      <div className="absolute inset-0 bg-gradient-to-bl from-purple-950 via-purple-800 to-blue-300"></div>
 
       {/* Trait avec étoile en haut à gauche (dans la marge) */}
-      <div className="absolute top-12 left-12 z-30 flex flex-col items-center">
-        <svg className="text-white w-8 h-8 mb-2" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L14.472 9.528L22 12L14.472 14.472L12 22L9.528 14.472L2 12L9.528 9.528L12 2Z" strokeWidth="1" stroke="currentColor" fill="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <animate attributeName="stroke-dasharray" values="0 100;100 0" dur="2s" repeatCount="indefinite"/>
-          </path>
-        </svg>
+      <div className="absolute top-8 left-12 z-30 flex flex-col items-center">
+        <Star className="text-white w-8 h-8 mb-2" size={32} />
         <div className="w-px h-40 bg-white"></div>
       </div>
 
-      {/* Colonne verticale à gauche : Florian LEVREAU → PORTFOLIO → 3D Artist */}
-      <div className="absolute top-12 left-12 z-30 flex flex-col gap-8">
-        {/* 1. Florian LEVREAU */}
-        <div className="flex items-start gap-4 ml-12">
-          <div className="text-white text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-wider">
-            Florian LEVREAU
-          </div>
-        </div>
-
-        {/* 2. PORTFOLIO */}
-        <div className="pointer-events-none z-0 overflow-visible ml-12">
-          <h2 className="text-[12rem] md:text-[16rem] lg:text-[20rem] xl:text-[22rem] font-black text-white uppercase tracking-tighter leading-none select-none opacity-20 whitespace-nowrap">
-            Portfolio
-          </h2>
-        </div>
-
-        {/* 3. 3D Artist avec masque SVG knockout */}
-        <div className="ml-12 mr-12">
-        <svg viewBox="0 0 500 150" width="500" height="150" role="img" aria-label="3D ARTIST knockout">
-          <defs>
-            <mask id="knockout" maskUnits="userSpaceOnUse">
-              <rect x="15" y="15" width="470" height="120" rx="30" fill="white"/>
-              <text 
-                x="45" 
-                y="110"
-                fontFamily="Anton, sans-serif"
-                fontWeight="400" 
-                fontSize="90" 
-                letterSpacing="8"
-                fill="black">3D ARTIST</text>
-            </mask>
-          </defs>
-
-          <rect x="30" y="24" width="470" height="120" rx="30"
-                fill="none" stroke="white" strokeWidth="2"/>
-
-          <rect x="15" y="15" width="470" height="120" rx="30"
-                fill="#e9ecff" mask="url(#knockout)"/>
-
-
-        </svg>
-        </div>
-      </div>
-
-
-      {/* Section Contact en bas à gauche (dans la marge) */}
-      <div className="absolute bottom-12 left-12 z-30 flex flex-col gap-4">
-        {/* Étoile en haut */}
-        <div className="flex items-start gap-4">
-          <svg className="text-white w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L14.472 9.528L22 12L14.472 14.472L12 22L9.528 14.472L2 12L9.528 9.528L12 2Z" strokeWidth="1" stroke="currentColor" fill="currentColor" strokeLinecap="round" strokeLinejoin="round">
-              <animate attributeName="stroke-dasharray" values="0 100;100 0" dur="2s" repeatCount="indefinite"/>
-            </path>
-          </svg>
-          
-          {/* Bouton Contact Me */}
-          <Link 
-            to="/contact" 
-            className="px-8 py-4 border-2 border-white rounded-full bg-transparent text-white text-xl font-black uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-300 cursor-pointer"
-          >
-            Contact Me
-          </Link>
-        </div>
-
-        {/* Informations de contact */}
-        <div className="text-white text-sm flex gap-6 ml-12">
-          <p className="uppercase tracking-wide">
-            <span className="font-bold">EMAIL</span> / <span className="lowercase">florianlevreau@gmail.com</span>
-          </p>
-          <p className="uppercase tracking-wide">
-            <span className="font-bold">instagram</span> / <span className="lowercase">@florian_levreau</span>
-          </p>
-        </div>
+      {/* Étoile à 4 branches en haut à droite */}
+      <div className="absolute top-20 right-20 z-30">
+        <Star className="text-white w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16" size={128} />
       </div>
 
       {/* Lignes verticales avec étoile en bas à droite (dans la marge) */}
@@ -104,49 +63,85 @@ function Hero() {
         {/* Ligne longue (gauche) */}
         <div className="flex flex-col items-center relative">
           <div className="w-px h-40 bg-white"></div>
-          <svg className="text-white w-8 h-8 mt-2" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L14.472 9.528L22 12L14.472 14.472L12 22L9.528 14.472L2 12L9.528 9.528L12 2Z" strokeWidth="1" stroke="currentColor" fill="currentColor" strokeLinecap="round" strokeLinejoin="round">
-              <animate attributeName="stroke-dasharray" values="0 100;100 0" dur="2s" repeatCount="indefinite"/>
-            </path>
-          </svg>
+          <Star className="text-white w-8 h-8 mt-2" size={32} />
         </div>
         {/* Ligne courte (droite) */}
         <div className="w-px h-40 bg-white"></div>
       </div>
 
-      
+      {/* Container avec padding uniforme */}
+      <div className="relative w-full h-full p-6 md:p-12 lg:p-16 xl:p-24 flex flex-col justify-start gap-8">
 
 
-      {/* Main content container */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="grid grid-cols-12 gap-8 items-center relative">
+        {/* PORTFOLIO - toute la largeur */}
+        <div ref={containerRef} className="w-full pointer-events-none z-0 overflow-visible relative" style={{ paddingTop: '3rem', paddingBottom: '1rem' }}>
+          <h2 
+            ref={textRef}
+            className="font-russo text-white opacity-90 uppercase tracking-tight leading-none select-none whitespace-nowrap scale-y-150 pointer-events-none" 
+            style={{ fontSize: `${fontSize}px`, width: '100%', letterSpacing: '0.05em', transformOrigin: 'center' }}
+          >
+            Portfolio
+          </h2>
           
-
-            {/* Center - 3D Model Canvas - superposé sur PORTFOLIO */}
-            <div className="col-start-6 col-span-7 relative h-screen z-30">
-              <div className="absolute inset-0">
-                <Canvas
-                  camera={{ position: [0, 0, 6], fov: 45 }}
-                  className="w-full h-full"
-                >
-                  <ambientLight intensity={0.5} />
-                  <pointLight position={[10, 10, 10]} />
-                  <directionalLight position={[-5, 5, -5]} intensity={1} />
-                  <group scale={0.6}>
-                    <HeroModel />
-                  </group>
-                  <OrbitControls
-                    enableZoom={false}
-                    enablePan={false}
-                    autoRotate
-                    autoRotateSpeed={0.5}
-                  />
-                  <Environment preset="sunset" />
-                </Canvas>
-              </div>
-            </div>
+          {/* Hero Image */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-[15%] -translate-y-[0%] w-[30%] h-[60vh] z-30 pointer-events-none flex items-center justify-center">
+            <img 
+              src="/ImageHero.png" 
+              alt="Hero" 
+              className="w-full h-full object-contain"
+            />
           </div>
+        </div>
+
+        {/* 3D Artist avec masque SVG knockout */}
+        <div className="z-30 pointer-events-none">
+          <svg viewBox="0 0 500 150" width="500" height="150" role="img" aria-label="3D ARTIST knockout">
+            <defs>
+              <mask id="knockout" maskUnits="userSpaceOnUse">
+                <rect x="15" y="15" width="470" height="120" rx="30" fill="white"/>
+                <text 
+                  x="45" 
+                  y="110"
+                  fontFamily="Anton, sans-serif"
+                  fontWeight="400" 
+                  fontSize="90" 
+                  letterSpacing="8"
+                  fill="black">3D ARTIST</text>
+              </mask>
+            </defs>
+
+            <rect x="30" y="30" width="470" height="120" rx="30"
+                  fill="none" stroke="white" strokeWidth="2"/>
+
+            <rect x="15" y="15" width="470" height="120" rx="30"
+                  fill="#e9ecff" mask="url(#knockout)"/>
+          </svg>
+        </div>
+      </div>
+
+      {/* Section Contact en bas à gauche (dans la marge) */}
+      <div className="absolute bottom-12 left-12 z-40 flex flex-col gap-4">
+        {/* Étoile en haut */}
+        <div className="flex items-start gap-4 pointer-events-none">
+          <Star className="text-white w-8 h-8" size={32} />
+          
+          {/* Bouton Contact Me */}
+          <Link 
+            to="/contact" 
+            className="px-8 py-4 border-2 border-white rounded-full bg-transparent text-white text-xl font-black uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-300 cursor-pointer pointer-events-auto relative z-50"
+          >
+            Contact Me
+          </Link>
+        </div>
+
+        {/* Informations de contact */}
+        <div className="text-white text-sm flex gap-6 ml-12 pointer-events-none">
+          <p className="uppercase tracking-wide">
+            <span className="font-bold">EMAIL</span> / <span className="lowercase">florianlevreau@gmail.com</span>
+          </p>
+          <p className="uppercase tracking-wide">
+            <span className="font-bold">instagram</span> / <span className="lowercase">@florian_levreau</span>
+          </p>
         </div>
       </div>
     </section>

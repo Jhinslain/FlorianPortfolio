@@ -1,13 +1,13 @@
 import Navigation from '../components/Navigation'
 import Hero from '../components/Hero'
-import ProfessionalWork from '../components/ProfessionalWork'
+import ProjetsCategories from '../components/ProjetsCategories'
 
 function Home() {
   return (
     <div>
       <Navigation />
       <Hero />
-      <ProfessionalWork />
+      <ProjetsCategories />
     </div>
   )
 }

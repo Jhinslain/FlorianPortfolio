@@ -12,6 +12,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        badeen: ['"Badeen Display"', 'sans-serif'],
+        russo: ['"Russo One"', 'sans-serif'],
       },
     },
   },
