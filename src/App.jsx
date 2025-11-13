@@ -4,6 +4,9 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
+import ThreeD from './pages/3D'
+import VR from './pages/VR'
+import Print3D from './pages/Print3D'
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/3d" element={<ThreeD />} />
+          <Route path="/vr" element={<VR />} />
+          <Route path="/print3d" element={<Print3D />} />
         </Routes>
       </Layout>
     </Router>

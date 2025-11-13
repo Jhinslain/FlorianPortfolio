@@ -45,7 +45,7 @@ function Hero() {
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* Background gradient - violet foncé à indigo en bas à gauche */}
-      <div className="absolute inset-0 bg-gradient-to-bl from-purple-950 via-purple-800 to-blue-300"></div>
+      <div className="absolute inset-0 bg-gradient-hero"></div>
 
       {/* Trait avec étoile en haut à gauche (dans la marge) */}
       <div className="absolute top-8 left-12 z-30 flex flex-col items-center">
@@ -95,25 +95,25 @@ function Hero() {
 
         {/* 3D Artist avec masque SVG knockout */}
         <div className="z-30 pointer-events-none">
-          <svg viewBox="0 0 500 150" width="500" height="150" role="img" aria-label="3D ARTIST knockout">
+          <svg viewBox="0 0 1500 150" width="1500" height="150" role="img" aria-label="3D ARTIST knockout">
             <defs>
               <mask id="knockout" maskUnits="userSpaceOnUse">
-                <rect x="15" y="15" width="470" height="120" rx="30" fill="white"/>
+                <rect x="15" y="15" width="890" height="100" rx="30" fill="white"/>
                 <text 
                   x="45" 
-                  y="110"
+                  y="90"
                   fontFamily="Anton, sans-serif"
                   fontWeight="400" 
-                  fontSize="90" 
-                  letterSpacing="8"
-                  fill="black">3D ARTIST</text>
+                  fontSize="55" 
+                  letterSpacing="4"
+                  fill="black">Ingénieur · Artiste 3D · Expert VR</text>
               </mask>
             </defs>
 
-            <rect x="30" y="30" width="470" height="120" rx="30"
+            <rect x="30" y="30" width="890" height="100" rx="30"
                   fill="none" stroke="white" strokeWidth="2"/>
 
-            <rect x="15" y="15" width="470" height="120" rx="30"
+            <rect x="15" y="15" width="890" height="100" rx="30"
                   fill="#e9ecff" mask="url(#knockout)"/>
           </svg>
         </div>

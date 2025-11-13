@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Variables CSS correspondant aux couleurs de tailwind.config.js */
+    --color-primary: #6670da;
+    --color-secondary: #301f5e;
+    --color-tertiary: #231f2c;
+    --color-white: #FFFFFF;
+    --color-white-gray: #eaeaea;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -21,4 +30,29 @@
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+  
+  /* Gradients utilisant les variables CSS (qui correspondent à tailwind.config.js) */
+  .bg-gradient-hero {
+    background: linear-gradient(to bottom left, var(--color-tertiary), var(--color-secondary), var(--color-primary));
+  }
+  
+  .bg-gradient-primary {
+    background: linear-gradient(to bottom, var(--color-secondary), var(--color-primary), var(--color-tertiary));
+  }
+  
+  /* Fond uni avec les couleurs personnalisées */
+  .bg-gradient-tertiary {
+    background-color: var(--color-tertiary);
+  }
+  
+  .bg-gradient-secondary {
+    background-color: var(--color-secondary);
+  }
+  
+  .bg-gradient-primary-solid {
+    background-color: var(--color-primary);
+  }
+  
+  /* Classes pour utiliser les couleurs personnalisées dans les gradients Tailwind */
+  /* Utilisation: from-[var(--color-secondary)] via-[var(--color-primary)] to-[var(--color-tertiary)] */
 }

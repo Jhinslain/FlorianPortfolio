@@ -7,8 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        'portfolio-purple': '#6B46C1',
-        'portfolio-blue': '#3B82F6',
+        'color-primary': '#6670da',
+        'color-secondary': '#301f5e',
+        'color-tertiary': '#231f2c',
+        'white': '#FFFFFF',
+        'white-gray': '#eaeaea',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
