@@ -7,7 +7,7 @@ function VRProject() {
     title: 'Expérience VR Immersive',
     description: 'Environnement virtuel interactif avec interactions naturelles et navigation fluide. Cette expérience repousse les limites de l\'immersion et de l\'interaction en réalité virtuelle.',
     tags: ['VR', 'Unity', 'Interaction', 'Immersion', '3D'],
-    mediaPosition: 'right', // 'left' ou 'right'
+    position: 'droite', // 'gauche' ou 'droite'
     images: [
       '/VRImage.png',
       '/VRImage.png',
@@ -25,7 +25,7 @@ function VRProject() {
       title={projectData.title}
       description={projectData.description}
       tags={projectData.tags}
-      mediaPosition={projectData.mediaPosition}
+      position={projectData.position}
       images={projectData.images}
       videos={projectData.videos}
     />

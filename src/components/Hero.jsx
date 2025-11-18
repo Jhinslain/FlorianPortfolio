@@ -53,10 +53,6 @@ function Hero() {
         <div className="w-px h-40 bg-white"></div>
       </div>
 
-      {/* Étoile à 4 branches en haut à droite */}
-      <div className="absolute top-20 right-20 z-30">
-        <Star className="text-white w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16" size={128} />
-      </div>
 
       {/* Lignes verticales avec étoile en bas à droite (dans la marge) */}
       <div className="absolute bottom-12 right-12 z-30 flex items-end gap-3">

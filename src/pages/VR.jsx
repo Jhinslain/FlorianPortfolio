@@ -1,31 +1,36 @@
 import { Link } from 'react-router-dom'
 import Project from '../components/Project'
 import Star from '../components/Star'
+import Navigation from '../components/Navigation'
 
 function VR() {
   const projects = [
     {
       title: 'Chasse aux risques en crèche - petite enfance',
-      description: 'Réalisation d\'un projet en VR visant à sensibiliser aux risques présents dans les crèches pour les enfants et le personnel. L\'utilisateur explore une crèche et prend en photo les risques pour les corriger. Les risques et leur position sont choisis aléatoirement, offrant ainsi de multiples scénarios possibles. Réalisation de la simulation VR entièrement sous Unity et modélisation des assets avec Blender.',
+      description: 'Réalisation d\'un projet en VR visant à sensibiliser aux risques présents dans les crèches pour les enfants et le personnel. \n L\'utilisateur explore une crèche et prend en photo les risques pour les corriger. Les risques et leur position sont choisis aléatoirement, offrant ainsi de multiples scénarios possibles. \n Réalisation de la simulation VR entièrement sous Unity et modélisation des assets avec Blender.',
       tags: ['VR', 'Unity', 'Blender', 'Simulation', 'Petite Enfance'],
-      mediaPosition: 'right',
+      position: 'droite',
       images: [
-        '/VRImage.png',
-        // Ajoutez d'autres images ici
+        'Creche/KGr1.JPG',
+        'Creche/RisquesTra.png',
+        'Creche/KGr2.JPG',
       ],
       videos: [
         // Ajoutez les URLs des vidéos ici
       ]
     },
-    // Ajoutez d'autres projets ici
-    // {
-    //   title: 'Autre projet VR',
-    //   description: 'Description du projet...',
-    //   tags: ['VR', 'Unity'],
-    //   mediaPosition: 'left',
-    //   images: [],
-    //   videos: []
-    // }
+    {
+      title: 'Préparateur de commandes - Picking',
+      description: 'Développement complet d\'une simulation VR pour la formation au métier de Picking. \n L\'apprenant doit préparer une commande aléatoire en récupérant les colis aux adresses correspondantes. \n Réalisation de la simulation VR sous Unity et modélisation des assets avec Blender.',
+      tags: ['VR', 'Unity', 'Blender', 'Simulation', 'Formation'],
+      position: 'gauche',
+      images: [
+        // Ajoutez les images du projet ici
+      ],
+      videos: [
+        // Ajoutez les URLs des vidéos ici
+      ]
+    }
   ]
 
   const title = 'PROJETS · REALITÉ VIRTUELLE'
@@ -33,8 +38,9 @@ function VR() {
   
   return (
     <>
+    <Navigation />
       {/* En-tête de la page */}
-      <section className="relative w-full bg-gradient-tertiary">
+      <section className="relative w-full bg-gradient-tertiary ">
         {/* Boutons de navigation latéraux */}
         <div className="absolute right-4 sm:right-6 md:right-8 lg:right-16 xl:right-20 2xl:right-24 top-8 sm:top-12 md:top-16 lg:top-16 xl:top-24 z-40 flex flex-col gap-4 sm:gap-5 lg:gap-6 items-end">
           <Link
@@ -64,7 +70,7 @@ function VR() {
           </div>
         </div>
 
-        {/* Trait avec étoile en haut à gauche (dans la marge) */}
+        {/* étoile en haut à gauche (dans la marge) */}
         <div className="absolute top-2 left-2 sm:top-4 sm:left-4  lg:top-6 lg:left-6 xl:left-8 xl:top-8 2xl:left-10 2xl:top-10 z-30 flex flex-col items-center">
           <Star className="text-white w-8 h-8 sm:w-8 sm:h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 xl:w-20 xl:h-20 2xl:w-24 2xl:h-24 mb-2" size={32} />
         </div>
@@ -118,7 +124,7 @@ function VR() {
           title={project.title}
           description={project.description}
           tags={project.tags}
-          mediaPosition={project.mediaPosition}
+          position={project.position}
           images={project.images}
           videos={project.videos}
         />

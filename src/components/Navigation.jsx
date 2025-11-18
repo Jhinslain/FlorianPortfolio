@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Star from './Star'
 
 function Navigation() {
   return (
@@ -29,7 +30,9 @@ function Navigation() {
             >
               <span className="inline-block scale-y-150" style={{ transformOrigin: 'center' }}>Contact</span>
             </Link>
-          </div>
+            {/* Étoile à droite des liens */}
+            <Star className="text-white w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8" />
+      </div>
         </div>
       </div>
     </nav>
