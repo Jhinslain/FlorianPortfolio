@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Project from '../components/Project'
 import Star from '../components/Star'
 import Navigation from '../components/Navigation'
+import Galerie from '../components/Galerie'
 
 function VR() {
   const projects = [
@@ -11,9 +12,9 @@ function VR() {
       tags: ['VR', 'Unity', 'Blender', 'Simulation', 'Petite Enfance'],
       position: 'droite',
       images: [
-        'Creche/KGr1.JPG',
-        'Creche/RisquesTra.png',
-        'Creche/KGr2.JPG',
+        'VR/Creche/KGr1.JPG',
+        'VR/Creche/RisquesTra.png',
+        'VR/Creche/KGr2.JPG',
       ],
       videos: [
         // Ajoutez les URLs des vidéos ici
@@ -25,10 +26,89 @@ function VR() {
       tags: ['VR', 'Unity', 'Blender', 'Simulation', 'Formation'],
       position: 'gauche',
       images: [
-        // Ajoutez les images du projet ici
+        'VR/Picking/r6.png',
+        'VR/Picking/r2p.JPG',
+        'VR/Picking/r3.JPG',
+        'VR/Picking/r5.png',
+        'VR/Picking/r4.JPG',
+        
+      ],
+      videos: [
+        'https://www.youtube.com/embed/Q_Fv6Y1Pf-Q?si=PnX1KMXJ4aYKwx1g'
+      ]
+    },
+    {
+      title: 'Isolation',
+      description: 'Développement d\'une simulation VR pour les métiers liés à l\'isolation d\'une maison. \n Développement sous Unity d\'un système de caméra thermique et de capteurs d\'humidité. \n Modélisation 3D d\'une maison, dont les combles, le vide sanitaire, les prises électriques complètes.',
+      tags: ['VR', 'Unity', 'Blender', 'Simulation', 'Formation'],
+      position: 'droite',
+      images: [
+        'VR/Isolation/image3.JPG',
+        'VR/Isolation/image2.png',
+        'VR/Isolation/image1.png',
+
       ],
       videos: [
         // Ajoutez les URLs des vidéos ici
+      ]
+    },
+    {
+      title: 'Radiocommande Pont roulant VR',
+      description: 'Réalisation d\'une radiocommande fonctionnant sur un pont roulant en VR. L\'appareil communique avec le casque VR et sa position en temps réel est retranscrite dans la VR. \n Conception des PCB et de l\'électronique, boîtier imprimé en 3D, programmation Arduino Nano, et adaptation à une simulation VR existante. \n Conception de l\'intégralité de la radiocommande sur SolidWorks puis impression 3D et assemblage. Réalisation de l\'électronique sur Eagle.',
+      tags: ['VR', 'Arduino', 'SolidWorks', 'Eagle', 'Impression 3D', 'Électronique'],
+      position: 'gauche',
+      images: [
+        'VR/RadioCommande/c6.JPG',
+        'VR/RadioCommande/Ttelca1.JPG',
+        'VR/RadioCommande/telecommande.png',
+
+        'VR/RadioCommande/r2.png',
+        'VR/RadioCommande/DSC_0041.JPG',
+        'VR/RadioCommande/thumbnail_CiVR - Radio-commande détail.png',
+      
+        'VR/RadioCommande/Buttonc2.JPG',
+      ],
+      videos: [
+        // Ajoutez les URLs des vidéos ici
+      ]
+    },
+    {
+      title: 'Tourneur Fraiseur, Chaudronnier, Électricien, Mécanicien',
+      description: 'Réalisation de simulations VR pour divers métiers du CFAI, considérés comme métiers en tension. \n Programmation Unity d\'un tour manuel fonctionnel en VR, et de plusieurs systèmes d\'interaction et d\'assemblage pour les métiers de mécanicien et électricien. \n Développement d\'un système de soudure au TIG, pour le métier de chaudronnier.',
+      tags: ['VR', 'Unity', 'Simulation', 'Formation', 'CFAI'],
+      position: 'droite',
+      images: [
+        'VR/Tourneur/cr4.JPG',
+        'VR/Tourneur/Tr5.JPG',
+        'VR/Tourneur/c1.PNG',
+        'VR/Tourneur/cr7.JPG',
+        'VR/Tourneur/cr6.JPG',
+        'VR/Tourneur/Trender_c1.JPG',
+        'VR/Tourneur/Cleancr2.JPG',
+      ],
+      videos: [
+        'https://www.youtube.com/embed/9BaXDM0Ty9Y?si=aFugkBKzcboIwtOp',
+        'https://www.youtube.com/embed/3iJG8j8bniI?si=xLMb1uelT84VHO0k'
+
+      ]
+    },
+    {
+      title: 'Mécanicien Poids Lourd',
+      description: 'Réalisation d\'une simulation VR de changement de plaquettes de freins d\'un camion. \n Modélisation 3D sous Blender d\'un camion, de son système de freinage et de l\'ensemble des outils. \n Programmation sous Unity de l\'ensemble des algorithmes nécessaires.',
+      tags: ['VR', 'Unity', 'Blender', 'Simulation', 'Formation'],
+      position: 'gauche',
+      images: [
+        'VR/Truck/c1.JPG',
+        'VR/Truck/r1pr.JPG',
+        'VR/Truck/Truckvr2.JPG',
+        'VR/Truck/cr3.JPG',
+        'VR/Truck/Truckvr1.JPG',
+        'VR/Truck/r19.JPG',
+        'VR/Truck/c2.JPG',
+        'VR/Truck/vr4.JPG',
+      ],
+      videos: [
+        'https://www.youtube.com/embed/OxkFKQl36IA?si=nlEqM69IyG-KiL4b'
       ]
     }
   ]
@@ -129,6 +209,52 @@ function VR() {
           videos={project.videos}
         />
       ))}
+
+      {/* Galerie */}
+      <Galerie
+        title="GALERIE D'AUTRES PROJETS"
+        position="droite"
+        images={[
+          'VR/Galerie/elec.JPG',
+          'VR/Galerie/351200368_584779003807182_151793554362642557_n.png',
+          'VR/Galerie/JouseAub.JPG',
+          'VR/Galerie/cr1.JPG',
+          'VR/Galerie/cr2.JPG',
+          'VR/Galerie/Pr1.JPG',
+          'VR/Galerie/rr1.JPG',
+          'VR/Galerie/er1.JPG',
+          'VR/Galerie/kr2.JPG',
+          'VR/Galerie/kr1.JPG',
+          'VR/Galerie/ap1.JPG',
+          'VR/Galerie/r18.JPG',
+          'VR/Galerie/r17.JPG',
+          'VR/Galerie/albumcap.JPG',
+          'VR/Galerie/Canvas_2.png',
+          'VR/Galerie/c_elec_2.PNG',
+          'VR/Galerie/c_elec_1.PNG',
+          'VR/Galerie/cTools_Rock.JPG',
+          'VR/Galerie/Toyc1.JPG',
+          'VR/Galerie/PartieCommande.JPG',
+          'VR/Galerie/PC.png',
+          'VR/Galerie/ppr2.JPG',
+          'VR/Galerie/ppr1.JPG',
+          'VR/Galerie/Giraffe_2_sepia.JPG',
+          'VR/Galerie/Plaque_Pliage.JPG',
+          'VR/Galerie/Mr9.JPG',
+          'VR/Galerie/r16.JPG',
+          'VR/Galerie/r14.JPG',
+          'VR/Galerie/r7.JPG',
+          'VR/Galerie/Render7.png',
+          'VR/Galerie/Render4.png',
+          'VR/Galerie/Render1.png',
+          'VR/Galerie/hr11.JPG',
+          'VR/Galerie/hr10.JPG',
+          'VR/Galerie/hR8.JPG',
+          'VR/Galerie/Tr1.JPG',
+          'VR/Galerie/er20.JPG',
+          'VR/Galerie/cao1.PNG',
+        ]}
+      />
     </>
   )
 }
