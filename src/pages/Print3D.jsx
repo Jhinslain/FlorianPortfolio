@@ -1,44 +1,86 @@
 import { Link } from 'react-router-dom'
+import Project from '../components/Project'
 import Star from '../components/Star'
+import Navigation from '../components/Navigation'
+import Galerie from '../components/Galerie'
 
 function Print3D() {
   const projects = [
     {
-      id: 1,
-      title: 'Sculpture Imprimée',
-      description: 'Création artistique imprimée en 3D avec finition professionnelle et détails précis.',
-      category: 'Art',
-      image: '/PrintImage.png',
+      title: 'Turtle Castle',
+      description: 'Participation au concours artistique Necropolis organisé par Grinding Gear Games sur le thème de Path of Exile. \n\nConcours Necropolis | 26/05/2024 | 1re place',
+      position: 'droite',
+      images: [
+        'Print3D/Turtle/Turtle2.jpg',
+        'Print3D/Turtle/rr1.JPG',
+        'Print3D/Turtle/rr2.JPG',
+
+      ],
+      videos: [
+        // Ajoutez les URLs des vidéos ici
+      ],
+      links: [
+        {
+          url: 'https://fr.pathofexile.com/forum/view-thread/3526084',
+          label: 'Voir le forum'
+        }
+      ]
     },
     {
-      id: 2,
-      title: 'Prototype Fonctionnel',
-      description: 'Prototype mécanique imprimé avec tests de résistance et optimisation de la structure.',
-      category: 'Prototype',
+      title: 'Glimpse of Chaos',
+      description: 'Participation au concours artistique Ultimatum organisé par Grinding Gear Games sur le thème de Path of Exile. \n\nConcours Ultimatum | 11/06/2021 | 2e place',
+      position: 'gauche',
+      images: [
+        'Print3D/GlipseOfChaos/M1_3.jpg',
+        'Print3D/GlipseOfChaos/R4.PNG',
+        'Print3D/GlipseOfChaos/R5.PNG',
+        'Print3D/GlipseOfChaos/photo.png',
+
+      ],
+      videos: [
+        // Ajoutez les URLs des vidéos ici
+      ],
+      links: [
+        {
+          url: 'https://fr.pathofexile.com/forum/view-thread/3137899',
+          label: 'Voir le forum'
+        }
+      ]
     },
     {
-      id: 3,
-      title: 'Design de Produit',
-      description: 'Produit final imprimé en 3D avec ergonomie optimisée et finition premium.',
-      category: 'Produit',
+      title: 'Harvest',
+      description: 'Participation au concours artistique Harvest organisé par Grinding Gear Games sur le thème de Path of Exile.',
+      position: 'droite',
+      images: [
+        'Print3D/Harvest/final_2_1.png',
+        'Print3D/Harvest/R10.png',
+        'Print3D/Harvest/r13.png',
+      ],
+      videos: [
+        // Ajoutez les URLs des vidéos ici
+      ],
+      links: [
+        // Ajoutez le lien du forum si disponible
+      ]
     },
     {
-      id: 4,
-      title: 'Maquette Architecturale',
-      description: 'Maquette détaillée imprimée avec précision millimétrique et finition réaliste.',
-      category: 'Architecture',
-    },
-    {
-      id: 5,
-      title: 'Pièce Mécanique',
-      description: 'Composant mécanique imprimé avec tolérances précises et matériaux adaptés.',
-      category: 'Mécanique',
-    },
-    {
-      id: 6,
-      title: 'Création Personnalisée',
-      description: 'Objet sur mesure imprimé selon spécifications avec personnalisation avancée.',
-      category: 'Sur Mesure',
+      title: 'The Blood Thorn',
+      description: 'Participation au concours artistique Keepers of the Flame organisé par Grinding Gear Games sur le thème de Path of Exile.',
+      position: 'gauche',
+      images: [
+        'Print3D/TheBloodThorn/p0.jpg',
+        'Print3D/TheBloodThorn/F1.jpg',
+        'Print3D/TheBloodThorn/F2.jpg',
+      ],
+      videos: [
+        // Ajoutez les URLs des vidéos ici
+      ],
+      links: [
+        {
+          url: 'https://www.pathofexile.com/forum/view-thread/3859203/page/24#p26412742',
+          label: 'Voir le forum'
+        }
+        ]
     },
   ]
 
@@ -47,6 +89,7 @@ function Print3D() {
 
   return (
     <>
+    <Navigation />
       {/* En-tête de la page */}
       <section className="relative w-full bg-gradient-tertiary">
         {/* Boutons de navigation latéraux */}
@@ -126,37 +169,44 @@ function Print3D() {
       </section>
 
       {/* Liste des projets */}
-      <section className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-indigo-700 text-white pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-lg overflow-hidden hover:bg-white/20 transition-all group"
-            >
-              {project.image && (
-                <div className="w-full h-64 overflow-hidden bg-white/5">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              )}
-              <div className="p-6">
-                <div className="mb-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-yellow-300">
-                    {project.category}
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold uppercase mb-4">{project.title}</h2>
-                <p className="text-white/80">{project.description}</p>
-              </div>
-            </div>
-          ))}
-          </div>
-        </div>
-      </section>
+      {projects.map((project, index) => (
+        <Project
+          key={index}
+          title={project.title}
+          description={project.description}
+          tags={project.tags}
+          position={project.position}
+          images={project.images}
+          videos={project.videos}
+          links={project.links}
+        />
+      ))}
+
+      {/* Galerie */}
+      <Galerie
+        title="GALERIE D'AUTRES PROJETS"
+        position="gauche"
+        images={[
+          'Print3D/Galerie/Briar1.jpg',
+          'Print3D/Galerie/Briar2.JPG',
+          'Print3D/Galerie/Chica1.jpg',
+          'Print3D/Galerie/Chica2.JPG',
+          'Print3D/Galerie/Klee1.PNG',
+          'Print3D/Galerie/Klee2.png',
+          'Print3D/Galerie/Lulu2.JPG',
+          'Print3D/Galerie/lulu1.jpg',
+          'Print3D/Galerie/Mangle1.png',
+          'Print3D/Galerie/Mangle2.JPG',
+          'Print3D/Galerie/Mangle3.JPG',
+          'Print3D/Galerie/PomPom.JPG',
+          'Print3D/Galerie/Queen1.jpg',
+          'Print3D/Galerie/TheSquire1.png',
+          'Print3D/Galerie/Tristy1.jpg',
+        ]}
+        videos={[
+          'Print3D/Galerie/QueenVideo.mp4',
+        ]}
+      />
     </>
   )
 }

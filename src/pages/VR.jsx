@@ -194,6 +194,49 @@ function VR() {
             />
           </svg>
         </div>
+        
+        {/* Description avec badges */}
+        <div className="z-30 mt-6 sm:mt-8 md:mt-10 lg:mt-12 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+          {/* Texte de description */}
+          <div className="flex-1 max-w-4xl">
+            <p className="text-white/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
+              Présentation de projets en Réalité Virtuelle, réalisés pour l'entreprise Come-In-VR. Ces simulations VR sont destinées aux casques Oculus, principalement l'Oculus Quest 2.
+            </p>
+            <p className="text-white/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed mt-4 sm:mt-6">
+              Ces casques Oculus sont autonomes, le challenge principal est donc l'optimisation car la simulation VR est calculée directement sur le system Android de l'appareil.
+            </p>
+          </div>
+          
+          {/* Badges des logiciels et SDK */}
+          <div className="flex flex-col gap-4 sm:gap-6 w-full lg:w-auto lg:min-w-[280px]">
+            <div>
+              <h3 className="text-white text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4">
+                Logiciels utilisés
+              </h3>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                {['Blender', 'Unity', 'Visual Studio', 'Substance Painter', 'Plastic SCM'].map((software, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-full text-white text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap"
+                  >
+                    {software}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-white text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4">
+                SDK utilisé
+              </h3>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-full text-white text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap">
+                  Open XR
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </section>
 
@@ -215,44 +258,30 @@ function VR() {
         title="GALERIE D'AUTRES PROJETS"
         position="droite"
         images={[
-          'VR/Galerie/elec.JPG',
-          'VR/Galerie/351200368_584779003807182_151793554362642557_n.png',
-          'VR/Galerie/JouseAub.JPG',
-          'VR/Galerie/cr1.JPG',
-          'VR/Galerie/cr2.JPG',
-          'VR/Galerie/Pr1.JPG',
-          'VR/Galerie/rr1.JPG',
-          'VR/Galerie/er1.JPG',
-          'VR/Galerie/kr2.JPG',
-          'VR/Galerie/kr1.JPG',
-          'VR/Galerie/ap1.JPG',
-          'VR/Galerie/r18.JPG',
-          'VR/Galerie/r17.JPG',
-          'VR/Galerie/albumcap.JPG',
-          'VR/Galerie/Canvas_2.png',
-          'VR/Galerie/c_elec_2.PNG',
-          'VR/Galerie/c_elec_1.PNG',
-          'VR/Galerie/cTools_Rock.JPG',
-          'VR/Galerie/Toyc1.JPG',
-          'VR/Galerie/PartieCommande.JPG',
-          'VR/Galerie/PC.png',
-          'VR/Galerie/ppr2.JPG',
-          'VR/Galerie/ppr1.JPG',
-          'VR/Galerie/Giraffe_2_sepia.JPG',
-          'VR/Galerie/Plaque_Pliage.JPG',
-          'VR/Galerie/Mr9.JPG',
-          'VR/Galerie/r16.JPG',
-          'VR/Galerie/r14.JPG',
-          'VR/Galerie/r7.JPG',
-          'VR/Galerie/Render7.png',
-          'VR/Galerie/Render4.png',
           'VR/Galerie/Render1.png',
-          'VR/Galerie/hr11.JPG',
-          'VR/Galerie/hr10.JPG',
-          'VR/Galerie/hR8.JPG',
-          'VR/Galerie/Tr1.JPG',
-          'VR/Galerie/er20.JPG',
           'VR/Galerie/cao1.PNG',
+          'VR/Galerie/ppr2.JPG',
+          'VR/Galerie/kr2.JPG',
+          'VR/Galerie/er20.JPG',
+          'VR/Galerie/c_elec_2.PNG',
+          'VR/Galerie/r14.JPG',
+          'VR/Galerie/351200368_584779003807182_151793554362642557_n.png',
+          'VR/Galerie/Mr9.JPG',
+          'VR/Galerie/rr1.JPG',
+          'VR/Galerie/hr11.JPG',
+          'VR/Galerie/Toyc1.JPG',
+          'VR/Galerie/r18.JPG',
+          'VR/Galerie/Pr1.JPG',
+          'VR/Galerie/hR8.JPG',
+          'VR/Galerie/Giraffe_2_sepia.JPG',
+          'VR/Galerie/kr1.JPG',
+          'VR/Galerie/c_elec_1.PNG',
+          'VR/Galerie/r16.JPG',
+          'VR/Galerie/er1.JPG',
+          'VR/Galerie/Tr1.JPG',
+          'VR/Galerie/ap1.JPG',
+          'VR/Galerie/ppr1.JPG',
+          'VR/Galerie/hr10.JPG',
         ]}
       />
     </>

@@ -4,13 +4,26 @@ import Star from './Star'
 function Galerie({ 
   title,
   position = 'droite', // 'gauche' ou 'droite'
-  images = []
+  images = [],
+  videos = []
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
 
-  const openLightbox = (index) => {
-    setCurrentImageIndex(index)
+  // Combiner toutes les images et vidéos pour la navigation dans la lightbox
+  const allMedia = [
+    ...images.map(img => ({ type: 'image', src: img })),
+    ...videos.map(vid => ({ type: 'video', src: vid }))
+  ]
+
+  const openLightbox = (index, mediaType = 'image') => {
+    // Si c'est une vidéo, trouver son index dans allMedia
+    if (mediaType === 'video') {
+      const videoIndex = images.length + index
+      setCurrentMediaIndex(videoIndex)
+    } else {
+      setCurrentMediaIndex(index)
+    }
     setLightboxOpen(true)
     document.body.style.overflow = 'hidden'
   }
@@ -21,11 +34,11 @@ function Galerie({
   }
 
   const handleNext = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length)
+    setCurrentMediaIndex((prev) => (prev + 1) % allMedia.length)
   }
 
   const handlePrevious = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
+    setCurrentMediaIndex((prev) => (prev - 1 + allMedia.length) % allMedia.length)
   }
 
   // Gérer la navigation au clavier
@@ -37,15 +50,15 @@ function Galerie({
         setLightboxOpen(false)
         document.body.style.overflow = 'unset'
       } else if (e.key === 'ArrowLeft') {
-        setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
+        setCurrentMediaIndex((prev) => (prev - 1 + allMedia.length) % allMedia.length)
       } else if (e.key === 'ArrowRight') {
-        setCurrentImageIndex((prev) => (prev + 1) % images.length)
+        setCurrentMediaIndex((prev) => (prev + 1) % allMedia.length)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [lightboxOpen, images.length])
+  }, [lightboxOpen, allMedia.length])
 
   useEffect(() => {
     if (!lightboxOpen) {
@@ -56,7 +69,7 @@ function Galerie({
     }
   }, [lightboxOpen])
   const contentSection = (
-    <div className="flex-1 z-30 flex flex-col">
+    <div className={`z-30 flex flex-col ${position === 'gauche' ? 'items-end' : ''}`}>
       {title && (
         <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter mb-6">
           {title}
@@ -65,22 +78,83 @@ function Galerie({
     </div>
   )
 
-  // Section media en bas - toutes les images
-  const bottomMediaSection = images.length > 0 && (
+  // Fonction pour rendre une vidéo (YouTube ou locale)
+  const renderVideo = (video, index) => {
+    // Détecter si c'est une URL YouTube
+    const isYouTube = video.includes('youtube.com') || video.includes('youtu.be')
+    
+    if (isYouTube) {
+      // Si c'est déjà une URL embed, l'utiliser directement
+      let embedUrl = video
+      if (video.includes('/embed/')) {
+        embedUrl = video
+      } else if (video.includes('youtu.be/')) {
+        const videoId = video.split('youtu.be/')[1].split('?')[0]
+        embedUrl = `https://www.youtube.com/embed/${videoId}`
+      } else if (video.includes('youtube.com/watch?v=')) {
+        const videoId = video.split('v=')[1].split('&')[0]
+        embedUrl = `https://www.youtube.com/embed/${videoId}`
+      }
+      
+      return (
+        <div
+          key={`bottom-vid-${index}`}
+          className="relative w-full aspect-square overflow-hidden cursor-pointer group"
+          onClick={() => openLightbox(index, 'video')}
+        >
+          <iframe
+            src={embedUrl}
+            title={`${title || 'Galerie'} - Vidéo ${index + 1}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="w-full h-full group-hover:opacity-80 transition-opacity"
+          />
+          <div className="absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors" />
+        </div>
+      )
+    }
+    
+    // Pour les fichiers vidéo locaux
+    return (
+      <div
+        key={`bottom-vid-${index}`}
+        className="relative w-full aspect-square overflow-hidden cursor-pointer group"
+        onClick={() => openLightbox(index, 'video')}
+      >
+        <video
+          src={video}
+          className="w-full h-full object-cover group-hover:opacity-80 transition-opacity"
+          muted
+          playsInline
+        >
+          Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+        <div className="absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors pointer-events-none" />
+        {/* Icône play */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <svg className="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+    )
+  }
+
+  // Section media en bas - toutes les images et vidéos
+  const bottomMediaSection = (images.length > 0 || videos.length > 0) && (
     <div className="w-full z-30 mt-8">
       <div
         className="
           grid gap-4
           grid-cols-2
           md:grid-cols-3
-          lg:grid-cols-6
-          auto-rows-[180px] md:auto-rows-[200px] lg:auto-rows-[220px]
+          lg:grid-cols-4
         "
       >
         {images.map((image, index) => (
           <div
             key={`bottom-img-${index}`}
-            className="relative w-full h-full overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+            className="relative w-full aspect-square overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
             onClick={() => openLightbox(index)}
           >
             <img
@@ -90,6 +164,7 @@ function Galerie({
             />
           </div>
         ))}
+        {videos.map((video, index) => renderVideo(video, index))}
       </div>
     </div>
   )
@@ -97,7 +172,7 @@ function Galerie({
   return (
     <>
       {/* Lightbox */}
-      {lightboxOpen && images.length > 0 && (
+      {lightboxOpen && allMedia.length > 0 && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
           onClick={closeLightbox}
@@ -124,14 +199,14 @@ function Galerie({
           </button>
 
           {/* Flèche précédente */}
-          {images.length > 1 && (
+          {allMedia.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handlePrevious()
               }}
               className="absolute left-4 md:left-8 z-60 text-white hover:text-gray-300 transition-colors p-2"
-              aria-label="Image précédente"
+              aria-label="Média précédent"
             >
               <svg
                 className="w-8 h-8 md:w-12 md:h-12"
@@ -149,27 +224,69 @@ function Galerie({
             </button>
           )}
 
-          {/* Image */}
+          {/* Image ou Vidéo */}
           <div
             className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={images[currentImageIndex]}
-              alt={`${title || 'Galerie'} - Image ${currentImageIndex + 1}`}
-              className="max-w-full max-h-[90vh] object-contain"
-            />
+            {allMedia[currentMediaIndex].type === 'image' ? (
+              <img
+                src={allMedia[currentMediaIndex].src}
+                alt={`${title || 'Galerie'} - Image ${currentMediaIndex + 1}`}
+                className="max-w-full max-h-[90vh] object-contain"
+              />
+            ) : (
+              (() => {
+                const video = allMedia[currentMediaIndex].src
+                const isYouTube = video.includes('youtube.com') || video.includes('youtu.be')
+                
+                if (isYouTube) {
+                  let embedUrl = video
+                  if (video.includes('/embed/')) {
+                    embedUrl = video
+                  } else if (video.includes('youtu.be/')) {
+                    const videoId = video.split('youtu.be/')[1].split('?')[0]
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`
+                  } else if (video.includes('youtube.com/watch?v=')) {
+                    const videoId = video.split('v=')[1].split('&')[0]
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`
+                  }
+                  
+                  return (
+                    <div className="w-[90vw] max-w-7xl aspect-video">
+                      <iframe
+                        src={embedUrl}
+                        title={`${title || 'Galerie'} - Vidéo ${currentMediaIndex - images.length + 1}`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )
+                }
+                
+                return (
+                  <video
+                    src={video}
+                    controls
+                    className="w-[90vw] max-w-7xl max-h-[90vh]"
+                  >
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                  </video>
+                )
+              })()
+            )}
           </div>
 
           {/* Flèche suivante */}
-          {images.length > 1 && (
+          {allMedia.length > 1 && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handleNext()
               }}
               className="absolute right-4 md:right-8 z-60 text-white hover:text-gray-300 transition-colors p-2"
-              aria-label="Image suivante"
+              aria-label="Média suivant"
             >
               <svg
                 className="w-8 h-8 md:w-12 md:h-12"
@@ -187,10 +304,10 @@ function Galerie({
             </button>
           )}
 
-          {/* Compteur d'images */}
-          {images.length > 1 && (
+          {/* Compteur */}
+          {allMedia.length > 1 && (
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm md:text-base">
-              {currentImageIndex + 1} / {images.length}
+              {currentMediaIndex + 1} / {allMedia.length}
             </div>
           )}
         </div>

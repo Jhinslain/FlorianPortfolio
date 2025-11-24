@@ -7,7 +7,8 @@ function Project({
   tags = [],
   position = 'droite', // 'gauche' ou 'droite'
   images = [],
-  videos = []
+  videos = [],
+  links = [] // Tableau d'objets {url: string, label: string} ou tableau de strings
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
@@ -94,6 +95,39 @@ function Project({
               {tag}
             </span>
           ))}
+        </div>
+      )}
+
+      {links.length > 0 && (
+        <div className="flex flex-wrap gap-3 mb-8">
+          {links.map((link, index) => {
+            const url = typeof link === 'string' ? link : link.url
+            const label = typeof link === 'string' ? url : (link.label || url)
+            return (
+              <a
+                key={index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-full text-white text-sm sm:text-base font-bold uppercase tracking-wider hover:bg-white/20 hover:border-white/50 transition-all duration-300 inline-flex items-center gap-2"
+              >
+                {label}
+                <svg 
+                  className="w-4 h-4" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                  />
+                </svg>
+              </a>
+            )
+          })}
         </div>
       )}
     </div>
