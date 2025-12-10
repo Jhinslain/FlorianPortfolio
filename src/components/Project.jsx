@@ -136,8 +136,12 @@ function Project({
   // Séparer les images : premières pour la section droite, autres pour la section bas
   // Si 4 images exactement : prendre les 4 pour la section droite (2+2 empilées)
   // Sinon : prendre 3 pour la section droite (2+1)
+  // Si moins de 4 images et 1 vidéo : la vidéo va dans la section droite
+  const shouldPutVideoInRight = images.length < 4 && videos.length === 1
   const rightImages = images.length === 4 ? images.slice(0, 4) : images.slice(0, 3)
   const bottomImages = images.length === 4 ? images.slice(4) : images.slice(3) // Images restantes pour la section bas
+  const rightVideos = shouldPutVideoInRight ? videos.slice(0, 1) : []
+  const bottomVideos = shouldPutVideoInRight ? [] : videos
 
   // Section media à droite
   const rightMediaSection = (
@@ -150,7 +154,7 @@ function Project({
       </div>
 
       {/* Layout conditionnel selon le nombre d'images */}
-      {rightImages.length > 0 && (
+      {(rightImages.length > 0 || rightVideos.length > 0) && (
         <div className="flex gap-4 items-stretch">
           {/* Colonne gauche : 2 images empilées format 4/3 */}
           <div className="flex-1 flex flex-col gap-4">
@@ -169,7 +173,7 @@ function Project({
             ))}
           </div>
           
-          {/* Colonne droite : 2 images empilées si 4 images, sinon 1 image qui fait la hauteur des 2 images */}
+          {/* Colonne droite : 2 images empilées si 4 images, sinon 1 image/vidéo qui fait la hauteur des 2 images */}
           {rightImages.length === 4 ? (
             <div className="flex-1 flex flex-col gap-4">
               {rightImages.slice(2, 4).map((image, index) => (
@@ -198,6 +202,58 @@ function Project({
                   className="w-full h-full object-cover"
                 />
               </div>
+            </div>
+          ) : rightVideos.length > 0 ? (
+            <div className="flex-1 flex items-stretch">
+              {(() => {
+                const video = rightVideos[0]
+                const isYouTube = video.includes('youtube.com') || video.includes('youtu.be')
+                
+                if (isYouTube) {
+                  let embedUrl = video
+                  if (video.includes('/embed/')) {
+                    embedUrl = video
+                  } else if (video.includes('youtu.be/')) {
+                    const videoId = video.split('youtu.be/')[1].split('?')[0]
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`
+                  } else if (video.includes('youtube.com/watch?v=')) {
+                    const videoId = video.split('v=')[1].split('&')[0]
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`
+                  }
+                  
+                  return (
+                    <div 
+                      className="relative w-full h-full overflow-hidden cursor-pointer group"
+                      onClick={() => openLightbox(0, 'video')}
+                    >
+                      <iframe
+                        src={embedUrl}
+                        title={`${title || 'Projet'} - Vidéo`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="w-full h-full group-hover:opacity-80 transition-opacity"
+                      />
+                      <div className="absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors" />
+                    </div>
+                  )
+                }
+                
+                return (
+                  <div 
+                    className="relative w-full h-full overflow-hidden cursor-pointer group"
+                    onClick={() => openLightbox(0, 'video')}
+                  >
+                    <video
+                      src={video}
+                      controls
+                      className="w-full h-full object-cover group-hover:opacity-80 transition-opacity"
+                    >
+                      Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                    <div className="absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors pointer-events-none" />
+                  </div>
+                )
+              })()}
             </div>
           ) : null}
         </div>
@@ -261,8 +317,8 @@ function Project({
     )
   }
 
-  // Section media en bas (images restantes + vidéos)
-  const bottomMediaSection = (bottomImages.length > 0 || videos.length > 0) && (
+  // Section media en bas (images restantes + vidéos restantes)
+  const bottomMediaSection = (bottomImages.length > 0 || bottomVideos.length > 0) && (
     <div className="w-full z-30 mt-8">
       <div
         className="
@@ -281,12 +337,12 @@ function Project({
           >
             <img
               src={image}
-              alt={`${title || 'Projet'} - Image ${index + 4}`}
+              alt={`${title || 'Projet'} - Image ${index + rightImages.length + 1}`}
               className="w-full h-full object-cover"
             />
           </div>
         ))}
-        {videos.map((video, index) => renderVideo(video, index))}
+        {bottomVideos.map((video, index) => renderVideo(video, rightVideos.length + index))}
       </div>
     </div>
   )

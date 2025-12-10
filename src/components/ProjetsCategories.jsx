@@ -1,7 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Star from './Star'
 
 function ProjetsCategories() {
+  const navigate = useNavigate()
+
+  const handleCategoryClick = (e, link) => {
+    e.preventDefault()
+    navigate(link)
+    // Faire défiler vers le haut après la navigation
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 100)
+  }
   const categories = [
     {
       id: 1,
@@ -24,7 +34,7 @@ function ProjetsCategories() {
   ]
 
   return (
-    <section className="relative w-full overflow-y-auto sm:overflow-hidden">
+    <section id="projets" className="relative w-full overflow-y-auto sm:overflow-hidden">
       {/* Background color */}
       <div className="absolute inset-0 bg-gradient-tertiary"></div>
 
@@ -96,6 +106,7 @@ function ProjetsCategories() {
             <Link
               key={category.id}
               to={category.link}
+              onClick={(e) => handleCategoryClick(e, category.link)}
               className="relative group overflow-hidden rounded-2xl sm:rounded-3xl transition-transform duration-500 ease-in-out cursor-pointer w-full max-w-[280px] sm:max-w-[300px]  xl:max-w-[400px] sm:aspect-[3/4] min-h-[100px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px] hover:scale-110"
             >
               {/* Image 3D */}

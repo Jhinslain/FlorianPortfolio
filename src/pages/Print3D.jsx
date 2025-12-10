@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Project from '../components/Project'
 import Star from '../components/Star'
@@ -5,6 +6,8 @@ import Navigation from '../components/Navigation'
 import Galerie from '../components/Galerie'
 
 function Print3D() {
+  const [openPrinterIndex, setOpenPrinterIndex] = useState(null)
+  const [openProductIndex, setOpenProductIndex] = useState(null)
   const projects = [
     {
       title: 'Turtle Castle',
@@ -165,6 +168,110 @@ function Print3D() {
               />
             </svg>
           </div>
+        
+        {/* Description avec imprimantes et produits */}
+        <div className="z-30 mt-6 sm:mt-8 md:mt-10 lg:mt-12 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+          {/* Texte de description */}
+          <div className="flex-1 max-w-4xl">
+            <p className="text-white/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
+              Présentation de projets d'impression 3D réalisés avec différentes technologies et matériaux. Ces créations utilisent principalement l'impression résine (SLA) et l'impression FDM pour des résultats variés.
+            </p>
+            <p className="text-white/50 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed mt-4 sm:mt-6">
+              Vous pouvez cliquer sur les badges pour plus de détails.
+            </p>
+          </div>
+          
+          {/* Badges des imprimantes et produits */}
+          <div className="flex flex-col gap-4 sm:gap-6 w-full lg:w-auto lg:min-w-[280px] max-w-[50%]">
+            {/* Imprimantes utilisées */}
+            <div>
+              <h3 className="text-white text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4">
+                Imprimantes utilisées
+              </h3>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                {[
+                  { name: 'Anycubic Photon Mono M7 Pro', image: '/Printers/p1.JPG', description: 'Modèle récent et haut de gamme, reconnaissable à son grand écran et son design moderne.' },
+                  { name: 'Anycubic Photon Mono M5s', image: '/Printers/p2.JPG', description: 'Première imprimante résine grand public "sans nivellement" (auto-leveling).' },
+                  { name: 'Anycubic Photon S', image: '/Printers/p3.JPG', description: 'Modèle plus ancien, reconnaissable à son châssis noir et ses fenêtres jaunes.' },
+                  { name: 'Anycubic Photon Mono X', image: '/Printers/p4.JPG', description: 'Imprimante grand format très populaire, avec son capot jaune distinctif.' },
+                  { name: 'Flsun Super Racer (SR)', image: '/Printers/p5.JPG', description: 'Imprimante FDM (à filament) de type "Delta" avec trois bras, conçue pour imprimer très rapidement.' },
+                ].map((printer, index) => (
+                  <div 
+                    key={index} 
+                    className="relative"
+                  >
+                    <button
+                      className={`px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-full text-white text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 cursor-pointer hover:bg-white/15 ${
+                        openPrinterIndex === index ? 'bg-white/20' : ''
+                      }`}
+                      onClick={() => {
+                        setOpenPrinterIndex(openPrinterIndex === index ? null : index)
+                        setOpenProductIndex(null) // Fermer les produits quand on ouvre une imprimante
+                      }}
+                    >
+                      {printer.name}
+                    </button>
+                    {openPrinterIndex === index && (
+                      <div className="absolute top-full right-0 mt-2 z-50 bg-white border-2 border-white/30 rounded-lg shadow-lg flex items-start w-[260px] sm:w-[320px] md:w-[380px] max-h-12 sm:max-h-16 overflow-hidden">
+                        <img 
+                          src={printer.image} 
+                          alt={printer.name}
+                          className="w-12 h-12 sm:w-16 sm:h-16 object-cover flex-shrink-0"
+                        />
+                        <p className="text-[var(--color-tertiary)] text-xs leading-relaxed flex-1 overflow-y-auto max-h-12 sm:max-h-16 p-2">
+                          {printer.description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Produits utilisés */}
+            <div>
+              <h3 className="text-white text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4">
+                Produits utilisés
+              </h3>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                {[
+                  { name: 'eSUN Standard Resin', image: '/Printers/r3.JPG', description: 'Résine standard polyvalente, bouteille couleur aluminium.' },
+                  { name: 'Anycubic ABS-Like Resin V2', image: '/Printers/r2.JPG', description: 'Résine plus solide et moins cassante que la résine standard. Propriétés proches du plastique ABS.' },
+                  { name: 'Siraya Tech Blu', image: '/Printers/r1.JPG', description: 'Résine technique très réputée pour sa très haute résistance et sa solidité. Résine "Tough".' },
+                ].map((product, index) => (
+                  <div 
+                    key={index} 
+                    className="relative"
+                  >
+                    <button
+                      className={`px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-full text-white text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 cursor-pointer hover:bg-white/15 ${
+                        openProductIndex === index ? 'bg-white/20' : ''
+                      }`}
+                      onClick={() => {
+                        setOpenProductIndex(openProductIndex === index ? null : index)
+                        setOpenPrinterIndex(null) // Fermer les imprimantes quand on ouvre un produit
+                      }}
+                    >
+                      {product.name}
+                    </button>
+                    {openProductIndex === index && (
+                      <div className="absolute top-full right-0 mt-2 z-50 bg-white border-2 border-white/30 rounded-lg shadow-lg flex items-start w-[260px] sm:w-[320px] md:w-[380px] max-h-12 sm:max-h-16 overflow-hidden">
+                        <img 
+                          src={product.image} 
+                          alt={product.name}
+                          className="w-12 h-12 sm:w-16 sm:h-16 object-cover flex-shrink-0"
+                        />
+                        <p className="text-[var(--color-tertiary)] text-xs leading-relaxed flex-1 overflow-y-auto max-h-12 sm:max-h-16 p-2">
+                          {product.description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </section>
 
@@ -195,6 +302,7 @@ function Print3D() {
           'Print3D/Galerie/Klee2.png',
           'Print3D/Galerie/Lulu2.JPG',
           'Print3D/Galerie/lulu1.jpg',
+          'Print3D/Galerie/sanctumi2.png',
           'Print3D/Galerie/Mangle1.png',
           'Print3D/Galerie/Mangle2.JPG',
           'Print3D/Galerie/Mangle3.JPG',
@@ -202,6 +310,9 @@ function Print3D() {
           'Print3D/Galerie/Queen1.jpg',
           'Print3D/Galerie/TheSquire1.png',
           'Print3D/Galerie/Tristy1.jpg',
+          'Print3D/Galerie/DracoGold.jpg',
+          'Print3D/Galerie/Skeleton.jpg',
+          'Print3D/Galerie/photo.jpg',
         ]}
         videos={[
           'Print3D/Galerie/QueenVideo.mp4',

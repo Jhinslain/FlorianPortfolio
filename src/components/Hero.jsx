@@ -43,7 +43,7 @@ function Hero() {
   }, [])
 
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+    <section className="relative w-full h-auto md:h-screen overflow-hidden">
       {/* Background gradient - violet foncé à indigo en bas à gauche */}
       <div className="absolute inset-0 bg-gradient-hero"></div>
 
@@ -65,7 +65,7 @@ function Hero() {
       </div>
 
       {/* Container avec padding uniforme */}
-      <div className="relative w-full h-full p-4 sm:p-6 md:p-12 lg:p-16 xl:p-24 pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col justify-start gap-4 sm:gap-6 md:gap-8">
+      <div className="relative w-full h-auto md:h-full p-4 sm:p-6 md:p-12 lg:p-16 xl:p-24 pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24 flex flex-col justify-start gap-4 sm:gap-6 md:gap-8 pb-8 sm:pb-12 md:pb-0">
 
         {/* PORTFOLIO - toute la largeur */}
         <div ref={containerRef} className="w-full pointer-events-none z-0 overflow-visible relative" style={{ paddingTop: '4rem', paddingBottom: '0.5rem' }}>
@@ -202,10 +202,36 @@ function Hero() {
             </svg>
           </div>
         </div>
+
+        {/* Section Contact mobile et tablette - dans le flux normal */}
+        <div className="lg:hidden flex flex-col gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-8 md:mt-10">
+          {/* Étoile en haut */}
+          <div className="flex items-start gap-2 sm:gap-3 md:gap-4 pointer-events-none">
+            <Star className="text-white w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 flex-shrink-0" size={32} />
+            
+            {/* Bouton Contact Me */}
+            <Link 
+              to="/contact" 
+              className="px-4 sm:px-6 md:px-5 py-2 sm:py-3 md:py-2.5 border-2 border-white rounded-full bg-transparent text-white text-sm sm:text-base md:text-sm font-black uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-300 cursor-pointer pointer-events-auto relative z-50 whitespace-nowrap"
+            >
+              Contactez-moi
+            </Link>
+          </div>
+
+          {/* Informations de contact - chaque ligne sur mobile */}
+          <div className="text-white text-xs sm:text-sm flex flex-col sm:flex-row gap-2 sm:gap-4 md:gap-6 ml-0 sm:ml-8 md:ml-12 pointer-events-none">
+            <p className="uppercase tracking-wide">
+              <span className="font-bold">EMAIL</span> / <span className="lowercase break-all">florian.levreau@laposte.net</span>
+            </p>
+            <p className="uppercase tracking-wide">
+              <span className="font-bold">instagram</span> / <span className="lowercase">@florian_levreau</span>
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Section Contact en bas à gauche (dans la marge) */}
-      <div className="absolute bottom-4 sm:bottom-8 md:bottom-12 left-4 sm:left-6 md:left-12 z-40 flex flex-col gap-2 sm:gap-3 md:gap-4">
+      {/* Section Contact desktop - en bas à gauche (position absolue) */}
+      <div className="hidden lg:flex absolute bottom-12 left-12 z-40 flex-col gap-4">
         {/* Étoile en haut */}
         <div className="flex items-start gap-2 sm:gap-3 md:gap-4 pointer-events-none">
           <Star className="text-white w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 flex-shrink-0" size={32} />
@@ -215,14 +241,14 @@ function Hero() {
             to="/contact" 
             className="px-4 sm:px-6 md:px-5 lg:px-8 py-2 sm:py-3 md:py-2.5 lg:py-4 border-2 border-white rounded-full bg-transparent text-white text-sm sm:text-base md:text-sm lg:text-xl font-black uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-300 cursor-pointer pointer-events-auto relative z-50 whitespace-nowrap"
           >
-            Contact Me
+            Contactez-moi
           </Link>
         </div>
 
         {/* Informations de contact - chaque ligne sur mobile */}
         <div className="text-white text-xs sm:text-sm flex flex-col sm:flex-row gap-2 sm:gap-4 md:gap-6 ml-0 sm:ml-8 md:ml-12 pointer-events-none">
           <p className="uppercase tracking-wide">
-            <span className="font-bold">EMAIL</span> / <span className="lowercase break-all">florianlevreau@gmail.com</span>
+            <span className="font-bold">EMAIL</span> / <span className="lowercase break-all">florian.levreau@laposte.net</span>
           </p>
           <p className="uppercase tracking-wide">
             <span className="font-bold">instagram</span> / <span className="lowercase">@florian_levreau</span>

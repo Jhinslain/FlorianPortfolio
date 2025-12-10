@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Star from './Star'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -11,6 +13,28 @@ function Navigation() {
 
   const closeMenu = () => {
     setIsMenuOpen(false)
+  }
+
+  const handleProjectsClick = (e) => {
+    e.preventDefault()
+    closeMenu()
+    
+    if (location.pathname === '/') {
+      // Si on est déjà sur la page d'accueil, faire défiler vers la section projets
+      const projetsSection = document.getElementById('projets')
+      if (projetsSection) {
+        projetsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    } else {
+      // Sinon, naviguer vers l'accueil puis faire défiler
+      navigate('/')
+      setTimeout(() => {
+        const projetsSection = document.getElementById('projets')
+        if (projetsSection) {
+          projetsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
   }
 
   return (
@@ -30,12 +54,13 @@ function Navigation() {
             >
               <span className="inline-block scale-y-150" style={{ transformOrigin: 'center' }}>À propos</span>
             </Link>
-            <Link 
-              to="/projects" 
-              className="px-4 lg:px-5 py-2 lg:py-2.5 border-2 border-white rounded-full bg-transparent text-white text-xs lg:text-sm font-russo uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-500"
+            <a 
+              href="/#projets"
+              onClick={handleProjectsClick}
+              className="px-4 lg:px-5 py-2 lg:py-2.5 border-2 border-white rounded-full bg-transparent text-white text-xs lg:text-sm font-russo uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-500 cursor-pointer"
             >
               <span className="inline-block scale-y-150" style={{ transformOrigin: 'center' }}>Projets</span>
-            </Link>
+            </a>
             <Link 
               to="/contact" 
               className="px-4 lg:px-5 py-2 lg:py-2.5 border-2 border-white rounded-full bg-transparent text-white text-xs lg:text-sm font-russo uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-500"
@@ -90,13 +115,13 @@ function Navigation() {
             >
               <span className="inline-block scale-y-150" style={{ transformOrigin: 'center' }}>À propos</span>
             </Link>
-            <Link
-              to="/projects"
-              onClick={closeMenu}
-              className="w-full max-w-xs px-6 py-3 border-2 border-white rounded-full bg-transparent text-white text-base font-russo uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-500 text-center"
+            <a
+              href="/#projets"
+              onClick={handleProjectsClick}
+              className="w-full max-w-xs px-6 py-3 border-2 border-white rounded-full bg-transparent text-white text-base font-russo uppercase tracking-wider hover:bg-white hover:text-purple-900 transition-all duration-500 text-center cursor-pointer"
             >
               <span className="inline-block scale-y-150" style={{ transformOrigin: 'center' }}>Projets</span>
-            </Link>
+            </a>
             <Link
               to="/contact"
               onClick={closeMenu}
@@ -105,7 +130,7 @@ function Navigation() {
               <span className="inline-block scale-y-150" style={{ transformOrigin: 'center' }}>Contact</span>
             </Link>
             <Star className="text-white w-6 h-6 mt-2" />
-          </div>
+      </div>
         </div>
       </div>
     </nav>

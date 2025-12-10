@@ -1,44 +1,66 @@
 import { Link } from 'react-router-dom'
 import Star from '../components/Star'
+import Navigation from '../components/Navigation'
+import Project from '../components/Project'
+import Galerie from '../components/Galerie'
 
 function ThreeD() {
   const projects = [
     {
-      id: 1,
-      title: 'Modèle 3D - Projet Alpha',
-      description: 'Modélisation haute résolution avec textures photoréalistes et éclairage avancé.',
-      category: 'Modélisation',
-      image: '/3DImage.png',
+      title: 'Meta Knight',
+      description: 'Modélisation et animation 3D du personnage Meta Knight de la série Kirby.',
+      tags: ['Personnage', 'Animation', 'Modélisation'],
+      position: 'gauche',
+      images: [
+        '3DMod/Meta Knight/metaR1.PNG',
+        '3DMod/Meta Knight/metar10.PNG',
+      ],
+      videos: [
+        '3DMod/Meta Knight/0001-0140.mp4',
+      ],
+      links: []
     },
     {
-      id: 2,
-      title: 'Rendu Architectural',
-      description: 'Visualisation architecturale avec rendu photoréaliste et composition artistique.',
-      category: 'Rendu',
+      title: 'MiracleMatter',
+      description: 'Création 3D du boss MiracleMatter avec rendus détaillés et textures avancées.',
+      tags: ['Boss', 'Rendu', 'Textures'],
+      position: 'droite',
+      images: [
+        '3DMod/MiracleMatter/r8.png',
+        '3DMod/MiracleMatter/r7.PNG',
+        '3DMod/MiracleMatter/R14.png',
+
+      ],
+      videos: [],
+      links: []
     },
     {
-      id: 3,
-      title: 'Personnage 3D',
-      description: 'Création de personnage stylisé avec rigging et animation.',
-      category: 'Personnage',
+      title: 'WoodenTrain',
+      description: 'Modélisation 3D d\'un train en bois avec détails réalistes et rendus variés.',
+      tags: ['Objet', 'Modélisation', 'Rendu'],
+      position: 'gauche',
+      images: [
+        '3DMod/WoodenTrain/FF.jpg',
+        '3DMod/WoodenTrain/f2.png',
+        '3DMod/WoodenTrain/f3.PNG',
+        '3DMod/WoodenTrain/r2.PNG',
+      ],
+      videos: [],
+      links: []
     },
     {
-      id: 4,
-      title: 'Environnement Fantasy',
-      description: 'Création d\'un monde fantastique avec écosystème complet et atmosphère immersive.',
-      category: 'Environnement',
-    },
-    {
-      id: 5,
-      title: 'Produit Design',
-      description: 'Modélisation de produit avec shading avancé et présentation professionnelle.',
-      category: 'Design',
-    },
-    {
-      id: 6,
-      title: 'Animation 3D',
-      description: 'Séquence d\'animation avec motion design et effets visuels.',
-      category: 'Animation',
+      title: 'ww1',
+      description: 'Environnement 3D inspiré de la Première Guerre mondiale avec rendus atmosphériques.',
+      tags: ['Environnement', 'Rendu', 'Atmosphère'],
+      position: 'droite',
+      images: [
+        '3DMod/ww1/Rtubes.png',
+        '3DMod/ww1/r10.png',
+        '3DMod/ww1/r9.png',
+        '3DMod/ww1/r6.png',
+      ],
+      videos: [],
+      links: []
     },
   ]
 
@@ -47,6 +69,7 @@ function ThreeD() {
 
   return (
     <>
+    <Navigation />
       {/* En-tête de la page */}
       <section className="relative w-full bg-gradient-tertiary">
         {/* Boutons de navigation latéraux */}
@@ -122,41 +145,90 @@ function ThreeD() {
               />
             </svg>
           </div>
+        
+        {/* Description avec badges */}
+        <div className="z-30 mt-6 sm:mt-8 md:mt-10 lg:mt-12 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+          {/* Texte de description */}
+          <div className="flex-1 max-w-4xl">
+            <p className="text-white/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
+              Présentation de projets de modélisation 3D réalisés avec différents logiciels et techniques. Ces créations couvrent la modélisation, le texturing, le rendu et l'animation 3D.
+            </p>
+          </div>
+          
+          {/* Badges des logiciels */}
+          <div className="flex flex-col gap-4 sm:gap-6 w-full lg:w-auto lg:min-w-[280px]">
+            <div>
+              <h3 className="text-white text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider mb-3 sm:mb-4">
+                Logiciels utilisés
+              </h3>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                {['Blender', 'Maya', '3ds Max', 'Substance Painter', 'ZBrush', 'Unreal Engine'].map((software, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-full text-white text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap"
+                  >
+                    {software}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </section>
 
+      {/* Galerie */}
+      <Galerie
+        title="GALERIE DE PROJETS 3D"
+        position="droite"
+        images={[
+          '3DMod/Galerie/Vex2.JPG',
+          '3DMod/Galerie/Vex.JPG',
+          '3DMod/Galerie/Rubilax2.PNG',
+          '3DMod/Galerie/Rubilax.PNG',
+          '3DMod/Galerie/EngineerTuret.PNG',
+          '3DMod/Galerie/Engineer.png',
+          '3DMod/Galerie/PoupeeRusse.PNG',
+          '3DMod/Galerie/beemo.JPG',
+          '3DMod/Galerie/Scylla.PNG',
+          '3DMod/Galerie/Rickr5.png',
+          '3DMod/Galerie/Sceptre.png',
+          '3DMod/Galerie/Capsule.JPG',
+          '3DMod/Galerie/Sword.png',
+          '3DMod/Galerie/fugR1.PNG',
+          '3DMod/Galerie/donut.png',
+          '3DMod/Galerie/tof.png',
+          '3DMod/Galerie/candyBear.PNG',
+          '3DMod/Galerie/Car1.PNG',
+          '3DMod/Galerie/Alibi_b.JPG',
+          '3DMod/Galerie/ankha2.png',
+          '3DMod/Galerie/flechette.PNG',
+          '3DMod/Galerie/beeMinecraft.JPG',
+
+          '3DMod/Galerie/Pika.png',
+
+          '3DMod/Galerie/ShyGuy1.png',
+
+          '3DMod/Galerie/render_1.JPG',
+          '3DMod/Galerie/render.png',
+          '3DMod/Galerie/ic8_pc.jpg',
+          '3DMod/Galerie/w1.png',
+        ]}
+      />
+
       {/* Liste des projets */}
-      <section className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-indigo-700 text-white pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-lg overflow-hidden hover:bg-white/20 transition-all group"
-            >
-              {project.image && (
-                <div className="w-full h-64 overflow-hidden bg-white/5">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              )}
-              <div className="p-6">
-                <div className="mb-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-yellow-300">
-                    {project.category}
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold uppercase mb-4">{project.title}</h2>
-                <p className="text-white/80">{project.description}</p>
-              </div>
-            </div>
-          ))}
-          </div>
-        </div>
-      </section>
+      {projects.map((project, index) => (
+        <Project
+          key={index}
+          title={project.title}
+          description={project.description}
+          tags={project.tags}
+          position={project.position}
+          images={project.images}
+          videos={project.videos}
+          links={project.links}
+        />
+      ))}
     </>
   )
 }
